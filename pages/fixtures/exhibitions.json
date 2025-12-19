@@ -1,0 +1,53 @@
+[
+  {
+    "model": "pages.exhibition",
+    "pk": 1,
+    "fields": {
+      "title": "Whispers of Color",
+      "slug": "whispers-of-color",
+      "artist_name": "Constance Pappalardo",
+      "description": "A stunning exploration of light and emotion through figurative expressionism. This exhibition showcases the artist's latest works examining themes of feminine power, mythology, and the human condition through rich, luminous oil techniques.",
+      "image": "exhibitions/posters/exhibition-1.png",
+      "start_date": "December 1, 2024",
+      "end_date": "January 15, 2025",
+      "location": "Main Gallery",
+      "is_current": true,
+      "is_upcoming": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "pages.exhibition",
+    "pk": 2,
+    "fields": {
+      "title": "Feminine Divine",
+      "slug": "feminine-divine",
+      "artist_name": "Constance Pappalardo",
+      "description": "An exploration of goddess mythology across cultures, examining how feminine divine energy manifests in contemporary life. Features new works inspired by Venus, Lilith, and Fortuna.",
+      "image": "exhibitions/posters/exhibition-2.png",
+      "start_date": "February 1, 2025",
+      "end_date": "March 15, 2025",
+      "location": "Main Gallery",
+      "is_current": false,
+      "is_upcoming": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "pages.exhibition",
+    "pk": 3,
+    "fields": {
+      "title": "Portraits of Resilience",
+      "slug": "portraits-of-resilience",
+      "artist_name": "Constance Pappalardo",
+      "description": "A powerful collection celebrating strength and perseverance through intimate portraiture. Each work tells a story of courage and the human capacity for transformation.",
+      "image": "exhibitions/posters/exhibition-3.jpg",
+      "start_date": "April 1, 2025",
+      "end_date": "May 30, 2025",
+      "location": "Main Gallery",
+      "is_current": false,
+      "is_upcoming": true,
+      "order": 3
+    }
+  }
+]

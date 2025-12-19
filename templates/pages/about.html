@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}About - ConstCollection{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="bg-gradient-to-br from-gray-50 to-gray-100 py-16">
+    <div class="page-container">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+                <h1 class="section-title mb-4">About ConstCollection</h1>
+                <p class="font-inter text-lg text-gray-700 leading-relaxed mb-6">
+                    ConstCollection is a contemporary art gallery dedicated to showcasing exceptional figurative artwork that explores themes of identity, femininity, and the human condition.
+                </p>
+                <p class="font-inter text-gray-600 leading-relaxed">
+                    Our mission is to connect collectors with meaningful art that speaks to the soul, while supporting artists who push creative boundaries and challenge perspectives.
+                </p>
+            </div>
+            {% if artist.photo %}
+            <div class="aspect-[4/5] rounded-lg overflow-hidden shadow-xl">
+                <img 
+                    src="{% get_media_prefix %}{{ artist.photo }}" 
+                    alt="{{ artist.name }}"
+                    class="w-full h-full object-cover"
+                >
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- Artist Section -->
+{% if artist %}
+<section class="py-16">
+    <div class="page-container">
+        <h2 class="section-title mb-8">The Artist</h2>
+        <div class="max-w-3xl">
+            <h3 class="font-playfair text-2xl text-brand-indigo mb-4">{{ artist.name }}</h3>
+            <p class="font-inter text-gray-700 leading-relaxed mb-6">
+                {{ artist.bio }}
+            </p>
+            {% if artist.instagram %}
+            <div class="flex items-center gap-4">
+                <a href="https://instagram.com/{{ artist.instagram|slice:'1:' }}" target="_blank" rel="noopener noreferrer" 
+                   class="flex items-center gap-2 text-brand-indigo hover:text-accent-coral transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                    <span class="font-inter">{{ artist.instagram }}</span>
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Values Section -->
+<section class="bg-brand-indigo text-white py-16">
+    <div class="page-container">
+        <h2 class="font-playfair text-3xl sm:text-4xl text-center mb-12">Our Values</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="text-center">
+                <div class="w-16 h-16 bg-accent-coral/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-accent-coral" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                    </svg>
+                </div>
+                <h3 class="font-playfair text-xl mb-2">Passion</h3>
+                <p class="font-inter text-gray-300 text-sm">
+                    Every piece in our collection is chosen with care and a deep appreciation for artistic excellence.
+                </p>
+            </div>
+            <div class="text-center">
+                <div class="w-16 h-16 bg-accent-coral/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-accent-coral" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                    </svg>
+                </div>
+                <h3 class="font-playfair text-xl mb-2">Authenticity</h3>
+                <p class="font-inter text-gray-300 text-sm">
+                    We guarantee the provenance and authenticity of every artwork we present.
+                </p>
+            </div>
+            <div class="text-center">
+                <div class="w-16 h-16 bg-accent-coral/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-accent-coral" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                </div>
+                <h3 class="font-playfair text-xl mb-2">Connection</h3>
+                <p class="font-inter text-gray-300 text-sm">
+                    We believe art should create meaningful connections between artists and collectors.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section class="py-16">
+    <div class="page-container">
+        <div class="max-w-2xl mx-auto text-center">
+            <h2 class="section-title mb-4">Get in Touch</h2>
+            <p class="font-inter text-gray-600 mb-8">
+                Have questions about our collection or interested in a commission? We'd love to hear from you.
+            </p>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
+                <div class="card p-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-brand-indigo mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                    <h3 class="font-inter font-semibold text-gray-900 mb-1">Email</h3>
+                    <a href="mailto:info@constcollection.com" class="font-inter text-brand-indigo hover:text-accent-coral transition-colors">
+                        info@constcollection.com
+                    </a>
+                </div>
+                <div class="card p-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-brand-indigo mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    <h3 class="font-inter font-semibold text-gray-900 mb-1">Location</h3>
+                    <p class="font-inter text-gray-600">
+                        Online Gallery
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

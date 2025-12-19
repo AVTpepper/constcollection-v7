@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Checkout - ConstCollection{% endblock %}
+
+{% block content %}
+<div class="page-container py-12">
+    <h1 class="section-title mb-8">Checkout</h1>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Checkout Form -->
+        <div class="lg:col-span-2">
+            <form action="{% url 'checkout' %}" method="post">
+                {% csrf_token %}
+                
+                <!-- Shipping Information -->
+                <div class="card p-6 mb-6">
+                    <h2 class="font-playfair text-xl text-brand-indigo mb-6">Shipping Information</h2>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label for="first_name" class="block font-inter text-sm text-gray-700 mb-2">First Name *</label>
+                            <input type="text" id="first_name" name="first_name" required class="input-field">
+                        </div>
+                        <div>
+                            <label for="last_name" class="block font-inter text-sm text-gray-700 mb-2">Last Name *</label>
+                            <input type="text" id="last_name" name="last_name" required class="input-field">
+                        </div>
+                        <div class="sm:col-span-2">
+                            <label for="email" class="block font-inter text-sm text-gray-700 mb-2">Email *</label>
+                            <input type="email" id="email" name="email" required class="input-field">
+                        </div>
+                        <div class="sm:col-span-2">
+                            <label for="address" class="block font-inter text-sm text-gray-700 mb-2">Address *</label>
+                            <input type="text" id="address" name="address" required class="input-field">
+                        </div>
+                        <div>
+                            <label for="city" class="block font-inter text-sm text-gray-700 mb-2">City *</label>
+                            <input type="text" id="city" name="city" required class="input-field">
+                        </div>
+                        <div>
+                            <label for="state" class="block font-inter text-sm text-gray-700 mb-2">State/Province *</label>
+                            <input type="text" id="state" name="state" required class="input-field">
+                        </div>
+                        <div>
+                            <label for="zip_code" class="block font-inter text-sm text-gray-700 mb-2">ZIP/Postal Code *</label>
+                            <input type="text" id="zip_code" name="zip_code" required class="input-field">
+                        </div>
+                        <div>
+                            <label for="country" class="block font-inter text-sm text-gray-700 mb-2">Country *</label>
+                            <select id="country" name="country" required class="input-field">
+                                <option value="United States">United States</option>
+                                <option value="Canada">Canada</option>
+                                <option value="United Kingdom">United Kingdom</option>
+                                <option value="Australia">Australia</option>
+                                <option value="Germany">Germany</option>
+                                <option value="France">France</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment Information -->
+                <div class="card p-6 mb-6">
+                    <h2 class="font-playfair text-xl text-brand-indigo mb-6">Payment Information</h2>
+                    
+                    <!-- Stripe Elements Placeholder -->
+                    <div class="bg-gray-50 border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                        </svg>
+                        <p class="font-inter text-gray-500 mb-2">Stripe Payment Integration</p>
+                        <p class="font-inter text-sm text-gray-400">
+                            For demo purposes, click "Place Order" to complete checkout
+                        </p>
+                    </div>
+                    
+                    <!-- 
+                    STRIPE INTEGRATION NOTES:
+                    1. Add Stripe.js: <script src="https://js.stripe.com/v3/"></script>
+                    2. Initialize Stripe: const stripe = Stripe('pk_test_...');
+                    3. Create Elements: const elements = stripe.elements();
+                    4. Mount card element: cardElement.mount('#card-element');
+                    5. Handle form submit with stripe.confirmCardPayment()
+                    -->
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="w-full btn-primary py-4 text-lg">
+                    Place Order
+                </button>
+            </form>
+
+            <!-- Back to Cart -->
+            <div class="mt-6">
+                <a href="{% url 'cart' %}" class="font-inter text-brand-indigo hover:text-brand-indigo-dark transition-colors inline-flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
+                    </svg>
+                    Back to Cart
+                </a>
+            </div>
+        </div>
+
+        <!-- Order Summary -->
+        <div>
+            {% include 'components/_cart_summary.html' with show_checkout_button=False %}
+            
+            <!-- Cart Items Preview -->
+            <div class="mt-6 card p-6">
+                <h3 class="font-inter font-semibold text-gray-900 mb-4">Items in Cart</h3>
+                <div class="space-y-3">
+                    {% for item in cart %}
+                    <div class="flex gap-3">
+                        <div class="w-12 h-12 rounded overflow-hidden bg-gray-100 flex-shrink-0">
+                            <img 
+                                src="{% get_media_prefix %}{{ item.image }}" 
+                                alt="{{ item.name }}"
+                                class="w-full h-full object-cover"
+                            >
+                        </div>
+                        <div class="flex-grow">
+                            <p class="font-inter text-sm text-gray-900 truncate">{{ item.name }}</p>
+                            <p class="font-inter text-xs text-gray-500">Qty: {{ item.quantity }}</p>
+                        </div>
+                        <p class="font-inter text-sm font-semibold text-gray-900">
+                            ${{ item.total_price|floatformat:2 }}
+                        </p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

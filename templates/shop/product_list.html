@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Shop - ConstCollection{% endblock %}
+
+{% block content %}
+<div class="page-container py-12">
+    <!-- Page Header -->
+    <div class="mb-8">
+        <h1 class="section-title">Shop</h1>
+        <p class="font-inter text-gray-600">
+            Prints, books, and exclusive gallery merchandise
+        </p>
+    </div>
+
+    <!-- Filters and Sort -->
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8 pb-8 border-b border-gray-200">
+        <!-- Filter by Category -->
+        <div class="flex flex-wrap gap-2">
+            <a href="{% url 'shop' %}?sort={{ current_sort }}" 
+               class="px-4 py-2 rounded-full text-sm font-inter transition-colors {% if not current_category %}bg-brand-indigo text-white{% else %}bg-gray-100 text-gray-700 hover:bg-gray-200{% endif %}">
+                All
+            </a>
+            {% for category in categories %}
+            <a href="{% url 'shop' %}?category={{ category.slug }}&sort={{ current_sort }}" 
+               class="px-4 py-2 rounded-full text-sm font-inter transition-colors {% if current_category == category.slug %}bg-brand-indigo text-white{% else %}bg-gray-100 text-gray-700 hover:bg-gray-200{% endif %}">
+                {{ category.name }}
+            </a>
+            {% endfor %}
+        </div>
+
+        <!-- Sort Options -->
+        <div class="flex items-center gap-2">
+            <label for="sort" class="font-inter text-sm text-gray-600">Sort by:</label>
+            <select id="sort" name="sort" 
+                    onchange="window.location.href='{% url 'shop' %}?{% if current_category %}category={{ current_category }}&{% endif %}sort=' + this.value"
+                    class="input-field py-2 px-3 pr-8 text-sm w-auto">
+                <option value="newest" {% if current_sort == 'newest' %}selected{% endif %}>Newest</option>
+                <option value="price-low" {% if current_sort == 'price-low' %}selected{% endif %}>Price: Low to High</option>
+                <option value="price-high" {% if current_sort == 'price-high' %}selected{% endif %}>Price: High to Low</option>
+                <option value="name" {% if current_sort == 'name' %}selected{% endif %}>Name</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Results Count -->
+    <p class="font-inter text-sm text-gray-500 mb-6">
+        Showing {{ products|length }} product{{ products|length|pluralize }}
+    </p>
+
+    <!-- Products Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        {% for product in products %}
+            {% include 'components/_product_card.html' with product=product %}
+        {% empty %}
+        <div class="col-span-full text-center py-16">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-gray-300 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+            </svg>
+            <p class="font-inter text-gray-500 text-lg">No products found</p>
+            <p class="font-inter text-gray-400 text-sm mt-2">Try adjusting your filters</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

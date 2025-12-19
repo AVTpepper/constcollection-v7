@@ -1,0 +1,31 @@
+<!-- Cart Summary -->
+<div class="bg-gray-50 rounded-lg p-6">
+    <h2 class="font-playfair text-xl text-brand-indigo mb-6">Order Summary</h2>
+    
+    <div class="space-y-3 mb-6">
+        <div class="flex justify-between font-inter text-sm">
+            <span class="text-gray-600">Items ({{ cart.item_count }})</span>
+            <span class="text-gray-900">${{ cart.subtotal|floatformat:2 }}</span>
+        </div>
+        <div class="flex justify-between font-inter text-sm">
+            <span class="text-gray-600">Shipping</span>
+            <span class="text-gray-900">${{ cart.shipping|floatformat:2 }}</span>
+        </div>
+        <div class="flex justify-between font-inter text-sm">
+            <span class="text-gray-600">Tax (8%)</span>
+            <span class="text-gray-900">${{ cart.tax|floatformat:2 }}</span>
+        </div>
+        <div class="border-t border-gray-200 pt-3">
+            <div class="flex justify-between font-inter font-semibold">
+                <span class="text-gray-900">Total</span>
+                <span class="text-brand-indigo text-lg">${{ cart.total|floatformat:2 }}</span>
+            </div>
+        </div>
+    </div>
+    
+    {% if show_checkout_button %}
+    <a href="{% url 'checkout' %}" class="block w-full btn-primary text-center">
+        Proceed to Checkout
+    </a>
+    {% endif %}
+</div>

@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}Gallery - ConstCollection{% endblock %}
+
+{% block content %}
+<div class="page-container py-12">
+    <!-- Page Header -->
+    <div class="mb-8">
+        <h1 class="section-title">Gallery</h1>
+        <p class="font-inter text-gray-600">
+            Explore our collection of contemporary artworks
+        </p>
+    </div>
+
+    <!-- Filters and Sort -->
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8 pb-8 border-b border-gray-200">
+        <!-- Filter by Medium -->
+        <div class="flex flex-wrap gap-2">
+            <a href="{% url 'gallery' %}?sort={{ current_sort }}" 
+               class="px-4 py-2 rounded-full text-sm font-inter transition-colors {% if not current_medium %}bg-brand-indigo text-white{% else %}bg-gray-100 text-gray-700 hover:bg-gray-200{% endif %}">
+                All
+            </a>
+            {% for value, label in medium_choices %}
+            <a href="{% url 'gallery' %}?medium={{ value }}&sort={{ current_sort }}" 
+               class="px-4 py-2 rounded-full text-sm font-inter transition-colors {% if current_medium == value %}bg-brand-indigo text-white{% else %}bg-gray-100 text-gray-700 hover:bg-gray-200{% endif %}">
+                {{ label }}
+            </a>
+            {% endfor %}
+        </div>
+
+        <!-- Sort Options -->
+        <div class="flex items-center gap-2">
+            <label for="sort" class="font-inter text-sm text-gray-600">Sort by:</label>
+            <select id="sort" name="sort" 
+                    onchange="window.location.href='{% url 'gallery' %}?{% if current_medium %}medium={{ current_medium }}&{% endif %}sort=' + this.value"
+                    class="input-field py-2 px-3 pr-8 text-sm w-auto">
+                <option value="featured" {% if current_sort == 'featured' %}selected{% endif %}>Featured</option>
+                <option value="newest" {% if current_sort == 'newest' %}selected{% endif %}>Newest</option>
+                <option value="price-low" {% if current_sort == 'price-low' %}selected{% endif %}>Price: Low to High</option>
+                <option value="price-high" {% if current_sort == 'price-high' %}selected{% endif %}>Price: High to Low</option>
+                <option value="artist" {% if current_sort == 'artist' %}selected{% endif %}>Artist</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Results Count -->
+    <p class="font-inter text-sm text-gray-500 mb-6">
+        Showing {{ artworks|length }} artwork{{ artworks|length|pluralize }}
+    </p>
+
+    <!-- Artworks Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        {% for artwork in artworks %}
+            {% include 'components/_artwork_card.html' with artwork=artwork %}
+        {% empty %}
+        <div class="col-span-full text-center py-16">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-gray-300 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            <p class="font-inter text-gray-500 text-lg">No artworks found</p>
+            <p class="font-inter text-gray-400 text-sm mt-2">Try adjusting your filters</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

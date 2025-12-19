@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Exhibitions - ConstCollection{% endblock %}
+
+{% block content %}
+<div class="page-container py-12">
+    <div class="mb-12">
+        <h1 class="section-title mb-2">Exhibitions</h1>
+        <p class="font-inter text-gray-600">
+            Discover our current, upcoming, and past exhibitions
+        </p>
+    </div>
+
+    <!-- Current Exhibitions -->
+    {% if current_exhibitions %}
+    <section class="mb-16">
+        <div class="flex items-center gap-3 mb-8">
+            <div class="w-3 h-3 bg-accent-coral rounded-full animate-pulse"></div>
+            <h2 class="font-playfair text-2xl text-brand-indigo">Current Exhibition</h2>
+        </div>
+        
+        {% for exhibition in current_exhibitions %}
+        <div class="card overflow-hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-2">
+                <div class="aspect-[4/3] lg:aspect-auto">
+                    <img 
+                        src="{% get_media_prefix %}{{ exhibition.image }}" 
+                        alt="{{ exhibition.title }}"
+                        class="w-full h-full object-cover"
+                    >
+                </div>
+                <div class="p-8 lg:p-12 flex flex-col justify-center">
+                    <span class="badge-new inline-block w-fit mb-4">Now Showing</span>
+                    <h3 class="font-playfair text-3xl text-brand-indigo mb-2">{{ exhibition.title }}</h3>
+                    <p class="font-inter text-xl text-gray-600 mb-4">{{ exhibition.artist_name }}</p>
+                    <p class="font-inter text-gray-700 leading-relaxed mb-6">
+                        {{ exhibition.description }}
+                    </p>
+                    <div class="flex flex-wrap gap-4 text-sm font-inter text-gray-500 mb-6">
+                        <div class="flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                            <span>{{ exhibition.start_date }} - {{ exhibition.end_date }}</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            <span>{{ exhibition.location }}</span>
+                        </div>
+                    </div>
+                    <a href="{% url 'gallery' %}" class="btn-primary inline-flex items-center w-fit">
+                        <span>View Artworks</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </section>
+    {% endif %}
+
+    <!-- Upcoming Exhibitions -->
+    {% if upcoming_exhibitions %}
+    <section class="mb-16">
+        <h2 class="font-playfair text-2xl text-brand-indigo mb-8">Upcoming Exhibitions</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {% for exhibition in upcoming_exhibitions %}
+            <div class="card overflow-hidden">
+                <div class="aspect-[16/9]">
+                    <img 
+                        src="{% get_media_prefix %}{{ exhibition.image }}" 
+                        alt="{{ exhibition.title }}"
+                        class="w-full h-full object-cover"
+                    >
+                </div>
+                <div class="p-6">
+                    <span class="badge-featured inline-block mb-3">Coming Soon</span>
+                    <h3 class="font-playfair text-xl text-brand-indigo mb-1">{{ exhibition.title }}</h3>
+                    <p class="font-inter text-gray-600 mb-3">{{ exhibition.artist_name }}</p>
+                    <p class="font-inter text-sm text-gray-700 mb-4 line-clamp-2">
+                        {{ exhibition.description }}
+                    </p>
+                    <div class="flex items-center gap-2 text-sm font-inter text-gray-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        <span>{{ exhibition.start_date }} - {{ exhibition.end_date }}</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- Past Exhibitions -->
+    {% if past_exhibitions %}
+    <section>
+        <h2 class="font-playfair text-2xl text-brand-indigo mb-8">Past Exhibitions</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {% for exhibition in past_exhibitions %}
+            <div class="card overflow-hidden opacity-75 hover:opacity-100 transition-opacity">
+                <div class="aspect-[4/3]">
+                    <img 
+                        src="{% get_media_prefix %}{{ exhibition.image }}" 
+                        alt="{{ exhibition.title }}"
+                        class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all"
+                    >
+                </div>
+                <div class="p-4">
+                    <h3 class="font-playfair text-lg text-brand-indigo mb-1">{{ exhibition.title }}</h3>
+                    <p class="font-inter text-sm text-gray-600 mb-2">{{ exhibition.artist_name }}</p>
+                    <p class="font-inter text-xs text-gray-500">
+                        {{ exhibition.start_date }} - {{ exhibition.end_date }}
+                    </p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- No Exhibitions -->
+    {% if not current_exhibitions and not upcoming_exhibitions and not past_exhibitions %}
+    <div class="text-center py-16">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-gray-300 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        </svg>
+        <p class="font-inter text-gray-500 text-lg">No exhibitions to display</p>
+        <p class="font-inter text-gray-400 text-sm mt-2">Check back soon for upcoming events</p>
+    </div>
+    {% endif %}
+
+    <!-- Visit Info -->
+    <section class="mt-16 bg-gray-50 rounded-2xl p-8 sm:p-12">
+        <div class="max-w-2xl mx-auto text-center">
+            <h2 class="font-playfair text-2xl text-brand-indigo mb-4">Plan Your Visit</h2>
+            <p class="font-inter text-gray-600 mb-6">
+                ConstCollection is an online gallery. Browse our collection from anywhere in the world, 
+                and contact us for private viewings or inquiries about specific works.
+            </p>
+            <a href="{% url 'about' %}" class="btn-outline">
+                Contact Us
+            </a>
+        </div>
+    </section>
+</div>
+{% endblock %}

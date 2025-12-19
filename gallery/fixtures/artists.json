@@ -1,0 +1,14 @@
+[
+  {
+    "model": "gallery.artist",
+    "pk": 1,
+    "fields": {
+      "name": "Constance Pappalardo",
+      "slug": "constance-pappalardo",
+      "bio": "Constance Pappalardo is a contemporary artist known for her evocative figurative paintings that explore themes of identity, femininity, and the human condition. Her work combines classical techniques with modern sensibilities, creating pieces that are both timeless and deeply personal.",
+      "photo": "artists/about-me-1.jpg",
+      "website": "",
+      "instagram": "@constancepappalardo"
+    }
+  }
+]

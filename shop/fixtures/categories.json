@@ -1,0 +1,38 @@
+[
+  {
+    "model": "shop.category",
+    "pk": 1,
+    "fields": {
+      "name": "Prints",
+      "slug": "prints",
+      "description": "High-quality limited edition prints and reproductions of original artworks."
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 2,
+    "fields": {
+      "name": "Books",
+      "slug": "books",
+      "description": "Art books, exhibition catalogs, and artist monographs."
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 3,
+    "fields": {
+      "name": "Merchandise",
+      "slug": "merchandise",
+      "description": "Gallery-branded merchandise and accessories."
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 4,
+    "fields": {
+      "name": "Stationery",
+      "slug": "stationery",
+      "description": "Art-inspired notebooks, cards, and writing accessories."
+    }
+  }
+]

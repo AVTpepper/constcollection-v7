@@ -1,0 +1,228 @@
+{
+  "meta": {
+    "project": "ConstCollection",
+    "description": "Design tokens for Django art gallery and shop",
+    "version": "1.0.0"
+  },
+  "colors": {
+    "brand": {
+      "indigo": {
+        "base": "#3730A3",
+        "dark": "#312E81",
+        "light": "#4F46E5",
+        "description": "Primary brand color - deep indigo"
+      },
+      "coral": {
+        "base": "#FF6B6B",
+        "dark": "#EE5A52",
+        "light": "#FF8787",
+        "description": "Accent color - warm coral"
+      }
+    },
+    "neutral": {
+      "white": "#FFFFFF",
+      "gray": {
+        "50": "#F9FAFB",
+        "100": "#F3F4F6",
+        "200": "#E5E7EB",
+        "300": "#D1D5DB",
+        "400": "#9CA3AF",
+        "500": "#6B7280",
+        "600": "#4B5563",
+        "700": "#374151",
+        "800": "#1F2937",
+        "900": "#111827"
+      },
+      "black": "#000000"
+    },
+    "semantic": {
+      "success": "#10B981",
+      "warning": "#F59E0B",
+      "error": "#EF4444",
+      "info": "#3B82F6"
+    }
+  },
+  "typography": {
+    "fontFamilies": {
+      "heading": {
+        "name": "Playfair Display",
+        "fallback": "serif",
+        "weights": [400, 500, 600, 700],
+        "googleFontsUrl": "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap"
+      },
+      "body": {
+        "name": "Inter",
+        "fallback": "sans-serif",
+        "weights": [300, 400, 500, 600, 700],
+        "googleFontsUrl": "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      }
+    },
+    "fontSizes": {
+      "xs": "0.75rem",
+      "sm": "0.875rem",
+      "base": "1rem",
+      "lg": "1.125rem",
+      "xl": "1.25rem",
+      "2xl": "1.5rem",
+      "3xl": "1.875rem",
+      "4xl": "2.25rem",
+      "5xl": "3rem",
+      "6xl": "3.75rem"
+    },
+    "lineHeights": {
+      "tight": "1.25",
+      "normal": "1.5",
+      "relaxed": "1.75"
+    }
+  },
+  "spacing": {
+    "scale": {
+      "0": "0",
+      "1": "0.25rem",
+      "2": "0.5rem",
+      "3": "0.75rem",
+      "4": "1rem",
+      "5": "1.25rem",
+      "6": "1.5rem",
+      "8": "2rem",
+      "10": "2.5rem",
+      "12": "3rem",
+      "16": "4rem",
+      "20": "5rem",
+      "24": "6rem",
+      "32": "8rem"
+    },
+    "containerMaxWidths": {
+      "sm": "640px",
+      "md": "768px",
+      "lg": "1024px",
+      "xl": "1280px",
+      "2xl": "1536px",
+      "content": "1280px"
+    }
+  },
+  "borderRadius": {
+    "none": "0",
+    "sm": "0.125rem",
+    "base": "0.25rem",
+    "md": "0.375rem",
+    "lg": "0.5rem",
+    "xl": "0.75rem",
+    "2xl": "1rem",
+    "full": "9999px"
+  },
+  "shadows": {
+    "sm": "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+    "base": "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
+    "md": "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+    "lg": "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+    "xl": "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
+    "2xl": "0 25px 50px -12px rgb(0 0 0 / 0.25)"
+  },
+  "breakpoints": {
+    "mobile": "0px",
+    "tablet": "640px",
+    "desktop": "1024px",
+    "wide": "1280px"
+  },
+  "components": {
+    "button": {
+      "primary": {
+        "background": "#FF6B6B",
+        "backgroundHover": "#EE5A52",
+        "text": "#FFFFFF",
+        "padding": "0.75rem 2rem",
+        "borderRadius": "0.5rem",
+        "fontFamily": "Inter"
+      },
+      "secondary": {
+        "background": "#3730A3",
+        "backgroundHover": "#312E81",
+        "text": "#FFFFFF",
+        "padding": "0.75rem 2rem",
+        "borderRadius": "0.5rem",
+        "fontFamily": "Inter"
+      },
+      "outline": {
+        "background": "transparent",
+        "border": "2px solid #3730A3",
+        "text": "#3730A3",
+        "padding": "0.75rem 2rem",
+        "borderRadius": "0.5rem",
+        "fontFamily": "Inter"
+      }
+    },
+    "card": {
+      "background": "#FFFFFF",
+      "border": "1px solid #E5E7EB",
+      "borderRadius": "0.5rem",
+      "padding": "1.5rem",
+      "shadow": "0 1px 3px 0 rgb(0 0 0 / 0.1)"
+    },
+    "badge": {
+      "featured": {
+        "background": "#3730A3",
+        "text": "#FFFFFF",
+        "padding": "0.25rem 0.75rem",
+        "borderRadius": "0.375rem",
+        "fontSize": "0.75rem"
+      },
+      "new": {
+        "background": "#FF6B6B",
+        "text": "#FFFFFF",
+        "padding": "0.25rem 0.75rem",
+        "borderRadius": "0.375rem",
+        "fontSize": "0.75rem"
+      }
+    }
+  },
+  "layout": {
+    "navigation": {
+      "height": "4rem",
+      "background": "#FFFFFF",
+      "borderBottom": "1px solid #E5E7EB"
+    },
+    "footer": {
+      "background": "#3730A3",
+      "text": "#FFFFFF",
+      "padding": "3rem 0"
+    },
+    "container": {
+      "maxWidth": "1280px",
+      "padding": "1rem"
+    }
+  },
+  "transitions": {
+    "duration": {
+      "fast": "150ms",
+      "base": "300ms",
+      "slow": "500ms"
+    },
+    "timing": {
+      "ease": "ease",
+      "easeIn": "ease-in",
+      "easeOut": "ease-out",
+      "easeInOut": "ease-in-out"
+    }
+  },
+  "grid": {
+    "gallery": {
+      "columns": {
+        "mobile": 1,
+        "tablet": 2,
+        "desktop": 3,
+        "wide": 4
+      },
+      "gap": "1.5rem"
+    },
+    "shop": {
+      "columns": {
+        "mobile": 1,
+        "tablet": 2,
+        "desktop": 3,
+        "wide": 4
+      },
+      "gap": "1.5rem"
+    }
+  }
+}

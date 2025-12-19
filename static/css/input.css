@@ -1,0 +1,72 @@
+@import "tailwindcss";
+
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* Custom theme configuration for Tailwind v4 */
+@theme {
+  --color-brand-indigo: #3730A3;
+  --color-brand-indigo-dark: #312E81;
+  --color-brand-indigo-light: #4F46E5;
+  --color-accent-coral: #FF6B6B;
+  --color-accent-coral-dark: #EE5A52;
+  --color-accent-coral-light: #FF8787;
+  
+  --font-playfair: "Playfair Display", serif;
+  --font-inter: "Inter", sans-serif;
+}
+
+/* Custom component classes */
+@layer components {
+  .btn-primary {
+    @apply bg-accent-coral hover:bg-accent-coral-dark text-white font-inter font-medium py-3 px-6 rounded-lg transition-colors duration-200;
+  }
+
+  .btn-secondary {
+    @apply bg-brand-indigo hover:bg-brand-indigo-dark text-white font-inter font-medium py-3 px-6 rounded-lg transition-colors duration-200;
+  }
+
+  .btn-outline {
+    @apply border-2 border-brand-indigo text-brand-indigo hover:bg-brand-indigo hover:text-white font-inter font-medium py-3 px-6 rounded-lg transition-colors duration-200;
+  }
+
+  .card {
+    @apply bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden;
+  }
+
+  .badge-featured {
+    @apply bg-brand-indigo text-white text-xs font-inter px-3 py-1 rounded-md;
+  }
+
+  .badge-new {
+    @apply bg-accent-coral text-white text-xs font-inter px-3 py-1 rounded-md;
+  }
+
+  .badge-low-stock {
+    @apply bg-yellow-500 text-white text-xs font-inter px-3 py-1 rounded-md;
+  }
+
+  .badge-out-of-stock {
+    @apply bg-gray-500 text-white text-xs font-inter px-3 py-1 rounded-md;
+  }
+
+  .nav-link {
+    @apply font-inter text-gray-700 hover:text-brand-indigo transition-colors duration-200;
+  }
+
+  .footer-link {
+    @apply text-gray-300 hover:text-accent-coral transition-colors duration-200;
+  }
+
+  .input-field {
+    @apply w-full px-4 py-3 border border-gray-300 rounded-lg font-inter text-gray-900 focus:outline-none focus:ring-2 focus:ring-brand-indigo focus:border-transparent;
+  }
+
+  .section-title {
+    @apply font-playfair text-3xl md:text-4xl text-brand-indigo mb-2;
+  }
+
+  .page-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+}

@@ -1,0 +1,182 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}{{ artwork.title }} - ConstCollection{% endblock %}
+
+{% block content %}
+<div class="page-container py-12">
+    <!-- Breadcrumb -->
+    <nav class="mb-8">
+        <ol class="flex items-center space-x-2 font-inter text-sm">
+            <li><a href="{% url 'home' %}" class="text-gray-500 hover:text-brand-indigo">Home</a></li>
+            <li class="text-gray-400">/</li>
+            <li><a href="{% url 'gallery' %}" class="text-gray-500 hover:text-brand-indigo">Gallery</a></li>
+            <li class="text-gray-400">/</li>
+            <li class="text-brand-indigo">{{ artwork.title }}</li>
+        </ol>
+    </nav>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <!-- Image Gallery -->
+        <div x-data="{ activeImage: 0 }">
+            <!-- Main Image -->
+            <div class="aspect-[3/4] rounded-lg overflow-hidden bg-gray-100 mb-4">
+                {% for image in images %}
+                <img 
+                    x-show="activeImage === {{ forloop.counter0 }}"
+                    src="{% get_media_prefix %}{{ image }}" 
+                    alt="{{ artwork.title }}"
+                    class="w-full h-full object-cover"
+                >
+                {% endfor %}
+            </div>
+            
+            <!-- Thumbnails -->
+            {% if images|length > 1 %}
+            <div class="flex gap-4">
+                {% for image in images %}
+                <button 
+                    @click="activeImage = {{ forloop.counter0 }}"
+                    class="w-20 h-20 rounded-lg overflow-hidden border-2 transition-colors"
+                    :class="activeImage === {{ forloop.counter0 }} ? 'border-brand-indigo' : 'border-transparent'"
+                >
+                    <img 
+                        src="{% get_media_prefix %}{{ image }}" 
+                        alt="{{ artwork.title }} thumbnail"
+                        class="w-full h-full object-cover"
+                    >
+                </button>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Artwork Details -->
+        <div>
+            <!-- Badges -->
+            <div class="flex gap-2 mb-4">
+                {% if artwork.is_featured %}
+                <span class="badge-featured">Featured</span>
+                {% endif %}
+                {% if artwork.is_new %}
+                <span class="badge-new">New</span>
+                {% endif %}
+            </div>
+
+            <h1 class="font-playfair text-3xl md:text-4xl text-brand-indigo mb-2">
+                {{ artwork.title }}
+            </h1>
+            
+            <p class="font-inter text-xl text-gray-600 mb-6">
+                by {{ artwork.artist.name }}
+            </p>
+
+            <!-- Price -->
+            <p class="font-inter text-3xl font-bold text-brand-indigo mb-6">
+                ${{ artwork.price|intcomma }}
+            </p>
+
+            <!-- Specifications -->
+            <div class="bg-gray-50 rounded-lg p-6 mb-6">
+                <h3 class="font-inter font-semibold text-gray-900 mb-4">Specifications</h3>
+                <dl class="space-y-3">
+                    <div class="flex justify-between">
+                        <dt class="font-inter text-gray-600">Medium</dt>
+                        <dd class="font-inter text-gray-900">{{ artwork.get_medium_display }}</dd>
+                    </div>
+                    <div class="flex justify-between">
+                        <dt class="font-inter text-gray-600">Dimensions</dt>
+                        <dd class="font-inter text-gray-900">{{ artwork.dimensions }}</dd>
+                    </div>
+                    <div class="flex justify-between">
+                        <dt class="font-inter text-gray-600">Year</dt>
+                        <dd class="font-inter text-gray-900">{{ artwork.year }}</dd>
+                    </div>
+                </dl>
+            </div>
+
+            <!-- Description -->
+            {% if artwork.description %}
+            <div class="mb-8">
+                <h3 class="font-inter font-semibold text-gray-900 mb-2">About this Artwork</h3>
+                <p class="font-inter text-gray-700 leading-relaxed">
+                    {{ artwork.description }}
+                </p>
+            </div>
+            {% endif %}
+
+            <!-- Add to Cart -->
+            <form action="{% url 'cart_add' %}" method="post" class="mb-6" x-data="{ quantity: 1 }">
+                {% csrf_token %}
+                <input type="hidden" name="item_type" value="artwork">
+                <input type="hidden" name="item_id" value="{{ artwork.id }}">
+                
+                <!-- Quantity Selector -->
+                <div class="flex items-center gap-4 mb-4">
+                    <label class="font-inter text-gray-700">Quantity:</label>
+                    <div class="flex items-center border border-gray-300 rounded-lg">
+                        <button 
+                            type="button"
+                            @click="quantity = Math.max(1, quantity - 1)"
+                            class="px-4 py-2 text-gray-600 hover:text-brand-indigo transition-colors"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
+                            </svg>
+                        </button>
+                        <input 
+                            type="number" 
+                            name="quantity" 
+                            x-model="quantity"
+                            min="1" 
+                            class="w-16 text-center font-inter border-0 focus:ring-0"
+                        >
+                        <button 
+                            type="button"
+                            @click="quantity++"
+                            class="px-4 py-2 text-gray-600 hover:text-brand-indigo transition-colors"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full btn-primary py-4 text-lg">
+                    Add to Cart
+                </button>
+            </form>
+
+            <!-- Action Buttons -->
+            <div class="flex gap-4">
+                <button class="flex-1 btn-outline flex items-center justify-center gap-2" x-data="{ liked: false }" @click="liked = !liked">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" :class="liked ? 'fill-accent-coral text-accent-coral' : ''" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                    </svg>
+                    <span x-text="liked ? 'Saved' : 'Save'">Save</span>
+                </button>
+                <button class="flex-1 btn-outline flex items-center justify-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                    </svg>
+                    <span>Share</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Related Artworks -->
+    {% if related_artworks %}
+    <section class="mt-16 pt-16 border-t border-gray-200">
+        <h2 class="section-title mb-8">You May Also Like</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {% for artwork in related_artworks %}
+                {% include 'components/_artwork_card.html' with artwork=artwork %}
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+</div>
+{% endblock %}

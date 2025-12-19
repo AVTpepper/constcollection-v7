@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ product.name }} - ConstCollection{% endblock %}
+
+{% block content %}
+<div class="page-container py-12">
+    <!-- Breadcrumb -->
+    <nav class="mb-8">
+        <ol class="flex items-center space-x-2 font-inter text-sm">
+            <li><a href="{% url 'home' %}" class="text-gray-500 hover:text-brand-indigo">Home</a></li>
+            <li class="text-gray-400">/</li>
+            <li><a href="{% url 'shop' %}" class="text-gray-500 hover:text-brand-indigo">Shop</a></li>
+            <li class="text-gray-400">/</li>
+            <li class="text-brand-indigo">{{ product.name }}</li>
+        </ol>
+    </nav>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <!-- Product Image -->
+        <div class="aspect-square rounded-lg overflow-hidden bg-gray-100">
+            <img 
+                src="{% get_media_prefix %}{{ product.image }}" 
+                alt="{{ product.name }}"
+                class="w-full h-full object-cover"
+            >
+        </div>
+
+        <!-- Product Details -->
+        <div>
+            <!-- Category -->
+            <p class="font-inter text-sm text-gray-500 uppercase tracking-wide mb-2">
+                {{ product.category.name }}
+            </p>
+
+            <!-- Stock Badge -->
+            <div class="mb-4">
+                {% if not product.in_stock %}
+                <span class="badge-out-of-stock">Out of Stock</span>
+                {% elif product.low_stock %}
+                <span class="badge-low-stock">Only {{ product.stock }} left</span>
+                {% endif %}
+            </div>
+
+            <h1 class="font-playfair text-3xl md:text-4xl text-brand-indigo mb-4">
+                {{ product.name }}
+            </h1>
+
+            <!-- Price -->
+            <p class="font-inter text-3xl font-bold text-brand-indigo mb-6">
+                ${{ product.price|floatformat:2 }}
+            </p>
+
+            <!-- Description -->
+            {% if product.description %}
+            <div class="mb-8">
+                <h3 class="font-inter font-semibold text-gray-900 mb-2">Description</h3>
+                <p class="font-inter text-gray-700 leading-relaxed">
+                    {{ product.description }}
+                </p>
+            </div>
+            {% endif %}
+
+            <!-- Add to Cart -->
+            {% if product.in_stock %}
+            <form action="{% url 'cart_add' %}" method="post" class="mb-6" x-data="{ quantity: 1 }">
+                {% csrf_token %}
+                <input type="hidden" name="item_type" value="product">
+                <input type="hidden" name="item_id" value="{{ product.id }}">
+                
+                <!-- Quantity Selector -->
+                <div class="flex items-center gap-4 mb-4">
+                    <label class="font-inter text-gray-700">Quantity:</label>
+                    <div class="flex items-center border border-gray-300 rounded-lg">
+                        <button 
+                            type="button"
+                            @click="quantity = Math.max(1, quantity - 1)"
+                            class="px-4 py-2 text-gray-600 hover:text-brand-indigo transition-colors"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
+                            </svg>
+                        </button>
+                        <input 
+                            type="number" 
+                            name="quantity" 
+                            x-model="quantity"
+                            min="1" 
+                            max="{{ product.stock }}"
+                            class="w-16 text-center font-inter border-0 focus:ring-0"
+                        >
+                        <button 
+                            type="button"
+                            @click="quantity = Math.min({{ product.stock }}, quantity + 1)"
+                            class="px-4 py-2 text-gray-600 hover:text-brand-indigo transition-colors"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full btn-primary py-4 text-lg">
+                    Add to Cart
+                </button>
+            </form>
+            {% else %}
+            <button disabled class="w-full bg-gray-300 text-gray-500 font-inter font-medium py-4 px-6 rounded-lg cursor-not-allowed text-lg mb-6">
+                Out of Stock
+            </button>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Related Products -->
+    {% if related_products %}
+    <section class="mt-16 pt-16 border-t border-gray-200">
+        <h2 class="section-title mb-8">Related Products</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {% for product in related_products %}
+                {% include 'components/_product_card.html' with product=product %}
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+</div>
+{% endblock %}
