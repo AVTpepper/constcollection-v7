@@ -29,3 +29,6 @@ Thumbs.db
 
 # Node (for Tailwind)
 node_modules/
+
+# React prototype (not needed in Django version)
+figma-made-code/
