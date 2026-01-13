@@ -9,17 +9,17 @@
 {% include 'components/_hero.html' with image=hero_image %}
 
 <!-- Featured Artworks Section -->
-<section class="page-container py-16">
-    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+<section class="page-container py-16 sm:py-20 lg:py-24">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-10 sm:mb-12">
         <div>
-            <h2 class="font-playfair text-3xl sm:text-4xl text-brand-indigo mb-2">
+            <h2 class="font-playfair text-2xl sm:text-3xl lg:text-4xl text-brand-indigo mb-2">
                 Featured Artworks
             </h2>
-            <p class="font-inter text-sm sm:text-base text-gray-600">
+            <p class="font-inter text-sm text-gray-500">
                 Handpicked masterpieces from our curated collection
             </p>
         </div>
-        <a href="{% url 'gallery' %}" class="hidden sm:flex btn-outline items-center text-sm">
+        <a href="{% url 'gallery' %}" class="hidden sm:flex btn-outline items-center">
             <span>View All</span>
             <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
@@ -28,7 +28,7 @@
     </div>
     
     <!-- Featured Artworks Grid -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 fluid-gap">
         {% for artwork in featured_artworks %}
             {% include 'components/_artwork_card.html' with artwork=artwork %}
         {% empty %}
@@ -51,43 +51,43 @@
 
 <!-- Current Exhibition Section -->
 {% if current_exhibition %}
-<section class="bg-gradient-to-br from-gray-50 to-gray-100 fluid-py-section">
+<section class="bg-gradient-to-br from-gray-50 to-gray-100 py-16 sm:py-20 lg:py-24">
     <div class="page-container">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
             <div class="order-2 lg:order-1">
                 <div class="flex items-center gap-2 text-accent-coral mb-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
-                    <span class="font-inter uppercase text-xs sm:text-sm tracking-wide font-medium">
+                    <span class="font-inter uppercase text-xs tracking-wide font-medium">
                         Current Exhibition
                     </span>
                 </div>
-                <h2 class="font-playfair text-3xl sm:text-4xl text-brand-indigo mb-4">
+                <h2 class="font-playfair text-2xl sm:text-3xl lg:text-4xl text-brand-indigo mb-4">
                     {{ current_exhibition.title }}
                 </h2>
-                <p class="font-inter text-lg sm:text-xl text-gray-600 mb-3 sm:mb-4">
+                <p class="font-inter text-base lg:text-lg text-gray-600 mb-3">
                     {{ current_exhibition.artist_name }}
                 </p>
-                <p class="font-inter text-sm sm:text-base text-gray-700 mb-4 sm:mb-6 leading-relaxed">
+                <p class="font-inter text-sm text-gray-700 mb-4 leading-relaxed">
                     {{ current_exhibition.description }}
                 </p>
-                <p class="font-inter text-xs sm:text-sm text-gray-500 mb-4 sm:mb-6">
+                <p class="font-inter text-xs text-gray-500 mb-6">
                     {{ current_exhibition.start_date }} - {{ current_exhibition.end_date }}
                 </p>
-                <a href="{% url 'exhibitions' %}" class="btn-secondary inline-flex items-center text-sm sm:text-base">
+                <a href="{% url 'exhibitions' %}" class="btn-secondary inline-flex items-center">
                     <span>View Exhibition Details</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                     </svg>
                 </a>
             </div>
             <div class="order-1 lg:order-2 flex justify-center">
-                <div class="aspect-[3/4] rounded-lg overflow-hidden shadow-xl sm:shadow-2xl min-h-[40vh] max-h-[70vh] w-full">
+                <div class="aspect-[3/4] rounded-lg overflow-hidden shadow-xl w-full max-w-md lg:max-w-none">
                     <img
                         src="{% get_media_prefix %}{{ current_exhibition.image }}"
                         alt="{{ current_exhibition.title }}"
-                        class="w-full h-full object-cover object-contain"
+                        class="w-full h-full object-cover"
                     >
                 </div>
             </div>
@@ -97,20 +97,20 @@
 {% endif %}
 
 <!-- Shop CTA Section -->
-<section class="page-container fluid-py-section">
-    <div class="bg-brand-indigo rounded-xl sm:rounded-2xl p-6 sm:p-8 md:p-12 text-white text-center">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 sm:h-12 sm:w-12 mx-auto mb-6 text-accent-coral" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+<section class="page-container py-16 sm:py-20 lg:py-24">
+    <div class="bg-brand-indigo rounded-xl sm:rounded-2xl p-8 sm:p-10 lg:p-14 text-white text-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 mx-auto mb-6 text-accent-coral" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
         </svg>
-        <h2 class="font-playfair text-3xl sm:text-4xl mb-4">
+        <h2 class="font-playfair text-2xl sm:text-3xl lg:text-4xl mb-4">
             Shop Art &amp; Merchandise
         </h2>
-        <p class="font-inter text-sm sm:text-base text-gray-200 mb-6 sm:mb-8 max-w-2xl mx-auto px-2">
+        <p class="font-inter text-sm text-gray-200 mb-8 max-w-xl mx-auto">
             Discover prints, books, and exclusive items from our collection. Perfect for art enthusiasts and collectors.
         </p>
-        <a href="{% url 'shop' %}" class="btn-primary inline-flex items-center mx-auto text-sm sm:text-base">
+        <a href="{% url 'shop' %}" class="btn-primary inline-flex items-center mx-auto">
             <span>Browse Shop</span>
-            <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
         </a>

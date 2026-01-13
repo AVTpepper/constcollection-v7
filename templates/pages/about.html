@@ -5,20 +5,20 @@
 
 {% block content %}
 <!-- Hero Section -->
-<section class="bg-gradient-to-br from-gray-50 to-gray-100 py-16">
+<section class="bg-gradient-to-br from-gray-50 to-gray-100 py-12 sm:py-16 lg:py-20">
     <div class="page-container">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
             <div>
-                <h1 class="section-title mb-4">Who Holds the Brush?</h1>
-                <p class="font-inter text-lg text-gray-700 leading-relaxed mb-6">
+                <h1 class="font-playfair text-3xl sm:text-4xl lg:text-5xl text-brand-indigo mb-6">Who Holds the Brush?</h1>
+                <p class="font-inter text-base lg:text-lg text-gray-700 leading-relaxed mb-6">
                     Cecilia K. is a contemporary artist whose work explores themes of feminine power, memory, and the reclamation of narrative. Working primarily in acrylic on canvas, she creates layered compositions that serve as both personal reflection and spiritual commentary.
                 </p>
-                <p class="font-inter text-gray-600 leading-relaxed">
+                <p class="font-inter text-sm lg:text-base text-gray-600 leading-relaxed">
                     Her large illuminated acrylic paintings vibrate with bright colours and storytelling. At the core of her work is a mother's plea for society to uplift and empower daughters.
                 </p>
             </div>
             {% if artist.photo %}
-            <div class="aspect-[4/5] rounded-lg overflow-hidden shadow-xl min-h-[40vh] max-h-[70vh]">
+            <div class="aspect-[4/5] rounded-lg overflow-hidden shadow-xl">
                 <img 
                     src="{% get_media_prefix %}{{ artist.photo }}" 
                     alt="{{ artist.name }}"
