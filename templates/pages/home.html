@@ -82,12 +82,12 @@
                     </svg>
                 </a>
             </div>
-            <div class="order-1 lg:order-2 flex justify-center">
-                <div class="aspect-[3/4] rounded-lg overflow-hidden shadow-xl w-full max-w-md lg:max-w-none">
+            <div class="order-1 lg:order-2">
+                <div class="aspect-[3/4] rounded-lg overflow-hidden shadow-lg max-w-xs sm:max-w-sm mx-auto lg:max-w-md">
                     <img
                         src="{% get_media_prefix %}{{ current_exhibition.image }}"
                         alt="{{ current_exhibition.title }}"
-                        class="w-full h-full object-cover"
+                        class="w-full h-full object-contain"
                     >
                 </div>
             </div>

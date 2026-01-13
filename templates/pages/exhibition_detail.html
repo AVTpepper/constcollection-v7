@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ exhibition.title }} - ConstCollection{% endblock %}
+
+{% block content %}
+<div class="page-container py-12 sm:py-16 lg:py-20">
+    <!-- Breadcrumb -->
+    <nav class="mb-8">
+        <ol class="flex items-center space-x-2 font-inter text-sm text-gray-500">
+            <li><a href="{% url 'home' %}" class="hover:text-brand-indigo transition-colors">Home</a></li>
+            <li><span class="text-gray-300">/</span></li>
+            <li><a href="{% url 'exhibitions' %}" class="hover:text-brand-indigo transition-colors">Exhibitions</a></li>
+            <li><span class="text-gray-300">/</span></li>
+            <li class="text-gray-900 truncate max-w-[200px]">{{ exhibition.title }}</li>
+        </ol>
+    </nav>
+
+    <!-- Under Construction Message -->
+    <div class="text-center py-16 sm:py-24">
+        <div class="mb-8">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 mx-auto text-brand-indigo/30" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+            </svg>
+        </div>
+        
+        <h1 class="font-playfair text-3xl sm:text-4xl lg:text-5xl text-brand-indigo mb-4">
+            Under Construction
+        </h1>
+        
+        <p class="font-inter text-lg text-gray-600 mb-8 max-w-md mx-auto">
+            We're working on the detailed page for <strong>{{ exhibition.title }}</strong>. Check back soon!
+        </p>
+        
+        <a href="{% url 'exhibitions' %}" class="btn-secondary inline-flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            <span>Back to Exhibitions</span>
+        </a>
+    </div>
+</div>
+{% endblock %}

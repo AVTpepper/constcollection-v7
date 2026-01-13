@@ -17,14 +17,14 @@
     </nav>
 
     <!-- Main Product Section -->
-    <div class="page-container pb-8 lg:pb-6" x-data="{ activeImage: 0, showLightbox: false }">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10">
+    <div class="page-container pb-8 lg:pb-12" x-data="{ activeImage: 0, showLightbox: false }">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
             
             <!-- Left Column: Image Gallery -->
-            <div class="space-y-3 lg:space-y-2 flex flex-col">
+            <div class="space-y-4">
                 <!-- Main Image -->
-                <div class="relative bg-gray-100 rounded-xl overflow-hidden cursor-zoom-in group shadow-lg min-h-[40vh] max-h-[70vh]" @click="showLightbox = true">
-                    <div class="aspect-[4/5] h-full">
+                <div class="relative bg-gray-100 rounded-lg overflow-hidden cursor-zoom-in group shadow-lg max-w-md mx-auto" @click="showLightbox = true">
+                    <div class="aspect-square\">
                         {% for image in images %}
                         <img 
                             x-show="activeImage === {{ forloop.counter0 }}"
@@ -59,7 +59,7 @@
                         <img 
                             src="{% get_media_prefix %}{{ image }}" 
                             alt="{{ product.name }} - View {{ forloop.counter }}"
-                            class="w-full h-full object-cover"
+                            class="w-full h-full object-contain"
                         >
                     </button>
                     {% endfor %}

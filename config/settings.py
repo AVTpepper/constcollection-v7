@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 import os
 from pathlib import Path
 from dotenv import load_dotenv
-import dj_database_url
 
 load_dotenv()
 
@@ -95,6 +94,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 # Use PostgreSQL on Render, SQLite locally
 if os.getenv('DATABASE_URL'):
+    import dj_database_url
     DATABASES = {
         'default': dj_database_url.config(
             default=os.getenv('DATABASE_URL'),

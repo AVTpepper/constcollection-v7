@@ -1,36 +1,36 @@
 {% load static %}
 <!-- Hero Section -->
-<section class="relative bg-gradient-to-br from-brand-indigo to-brand-indigo-dark text-white overflow-hidden min-h-[calc(100vh-56px)] sm:min-h-[calc(100vh-64px)]">
-    <div class="page-container h-full">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center min-h-[calc(100vh-56px)] sm:min-h-[calc(100vh-64px)] py-8 sm:py-12 lg:py-0">
+<section class="relative bg-gradient-to-br from-brand-indigo to-brand-indigo-dark text-white overflow-hidden">
+    <div class="page-container">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center min-h-[500px] lg:min-h-[600px] py-12 lg:py-0">
             <!-- Text Content -->
             <div class="z-10">
-                <h1 class="font-playfair text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-4 sm:mb-6 leading-tight">
+                <h1 class="font-playfair text-4xl sm:text-5xl lg:text-6xl mb-6 leading-tight truncate">
                     {{ title|default:"ConstCollection" }}
                 </h1>
-                <p class="font-inter text-base sm:text-lg md:text-xl text-gray-200 mb-6 sm:mb-8 max-w-lg">
-                    {{ subtitle|default:"Large illuminated acrylic paintings vibrating with bright colours and storytelling — at the core, a mother's plea for society to uplift and empower daughters." }}
+                <p class="font-inter text-lg sm:text-xl text-gray-200 mb-8 max-w-lg">
+                    {{ subtitle|default:"Large illuminated acrylic paintings vibrating with bright colours and storytelling, at the core, a mother's plea for society to uplift and empower daughters." }}
                 </p>
-                <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 max-w-xs sm:max-w-none">
-                    <a href="{% url 'shop' %}" class="btn-primary inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 group">
+                <div class="flex flex-col sm:flex-row gap-3 max-w-xs sm:max-w-none">
+                    <a href="{% url 'shop' %}" class="btn-primary inline-flex items-center justify-center group">
                         <span>Explore Shop</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 h-4 w-4 sm:h-5 sm:w-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                         </svg>
                     </a>
-                    <a href="{% url 'exhibitions' %}" class="border-2 border-white text-white hover:bg-white hover:text-brand-indigo font-inter font-medium py-3 sm:py-4 px-6 sm:px-8 text-sm sm:text-base rounded-lg transition-colors duration-200 inline-flex items-center justify-center">
+                    <a href="{% url 'exhibitions' %}" class="border-2 border-white text-white hover:bg-white hover:text-brand-indigo font-inter font-medium py-2.5 px-6 text-sm rounded-lg transition-colors duration-200 inline-flex items-center justify-center">
                         View Exhibitions
                     </a>
                 </div>
 
                 <!-- Social Media Links -->
-                <div class="flex items-center gap-3 mt-6 sm:mt-8">
-                    <span class="font-inter text-xs sm:text-sm text-gray-300/80">Follow us</span>
+                <div class="flex items-center gap-3 mt-6">
+                    <span class="font-inter text-xs text-gray-300/80">Follow us</span>
                     <div class="flex items-center gap-2">
                         <a href="https://www.facebook.com/profile.php?id=61559467855096" target="_blank" rel="noopener noreferrer" 
-                           class="group w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-white/30 bg-white/5 hover:bg-white hover:border-white flex items-center justify-center transition-all duration-300" 
+                           class="group w-8 h-8 sm:w-9 sm:h-9 rounded-full border border-white/30 bg-white/5 hover:bg-white hover:border-white flex items-center justify-center transition-all duration-300" 
                            aria-label="Follow us on Facebook">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 sm:h-5 sm:w-5 text-white group-hover:text-[#1877F2] transition-colors duration-300" fill="currentColor" viewBox="0 0 24 24">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-white group-hover:text-[#1877F2] transition-colors duration-300" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
                             </svg>
                         </a>
@@ -53,23 +53,24 @@
             </div>
 
             <!-- Hero Video -->
-            <div class="relative lg:absolute lg:right-0 lg:top-0 lg:h-full lg:w-1/2">
-                <div class="relative h-[280px] sm:h-[350px] md:h-[400px] lg:h-full rounded-lg lg:rounded-none overflow-hidden">
+            <div class="relative lg:absolute lg:right-0 lg:top-0 lg:h-full lg:w-1/2 overflow-hidden">
+                <div class="relative h-[300px] sm:h-[400px] lg:h-full rounded-lg lg:rounded-none overflow-hidden">
                     <video 
                         src="{% static 'videos/exhibition-video-1.mp4' %}" 
                         autoplay 
                         muted 
                         loop 
                         playsinline
-                        class="w-full h-full object-cover"
+                        class="w-full h-full"
+                        style="object-fit: cover;"
                     ></video>
-                    <div class="absolute inset-0 bg-gradient-to-t from-brand-indigo/50 to-transparent lg:bg-gradient-to-r"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-brand-indigo/30 to-transparent lg:bg-gradient-to-r"></div>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Decorative Elements (hidden on mobile to prevent overflow) -->
-    <div class="hidden sm:block absolute top-0 right-0 w-64 h-64 bg-accent-coral/10 rounded-full blur-3xl"></div>
-    <div class="hidden sm:block absolute bottom-0 left-0 w-96 h-96 bg-accent-coral/5 rounded-full blur-3xl"></div>
+    <div class="hidden lg:block absolute top-0 right-0 w-48 h-48 bg-accent-coral/10 rounded-full blur-3xl"></div>
+    <div class="hidden lg:block absolute bottom-0 left-0 w-64 h-64 bg-accent-coral/5 rounded-full blur-3xl"></div>
 </section>

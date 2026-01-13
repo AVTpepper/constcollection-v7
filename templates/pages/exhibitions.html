@@ -22,19 +22,19 @@
         
         {% for exhibition in current_exhibitions %}
         <div class="card overflow-hidden">
-            <div class="grid grid-cols-1 lg:grid-cols-2">
-                <div class="aspect-[4/3] lg:aspect-[3/4] max-h-72 sm:max-h-80 lg:max-h-96 overflow-hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+                <div class="aspect-[4/3] overflow-hidden rounded-lg max-h-[400px] lg:max-h-[500px]">
                     <img 
                         src="{% get_media_prefix %}{{ exhibition.image }}" 
                         alt="{{ exhibition.title }}"
                         class="w-full h-full object-cover"
                     >
                 </div>
-                <div class="p-8 lg:p-12 flex flex-col justify-center">
-                    <span class="badge-new inline-block w-fit mb-4">Now Showing</span>
-                    <h3 class="font-playfair text-3xl text-brand-indigo mb-2">{{ exhibition.title }}</h3>
-                    <p class="font-inter text-xl text-gray-600 mb-4">{{ exhibition.artist_name }}</p>
-                    <p class="font-inter text-gray-700 leading-relaxed mb-6">
+                <div class="p-4 sm:p-6 lg:p-8 flex flex-col justify-center">
+                    <span class="badge-new inline-block w-fit mb-3">Now Showing</span>
+                    <h3 class="font-playfair text-xl sm:text-2xl text-brand-indigo mb-2">{{ exhibition.title }}</h3>
+                    <p class="font-inter text-base sm:text-lg text-gray-600 mb-3">{{ exhibition.artist_name }}</p>
+                    <p class="font-inter text-sm text-gray-700 leading-relaxed mb-4 line-clamp-3">
                         {{ exhibition.description }}
                     </p>
                     <div class="flex flex-wrap gap-4 text-sm font-inter text-gray-500 mb-6">
@@ -52,8 +52,8 @@
                             <span>{{ exhibition.location }}</span>
                         </div>
                     </div>
-                    <a href="{% url 'gallery' %}" class="btn-primary inline-flex items-center w-fit">
-                        <span>View Artworks</span>
+                    <a href="{% url 'exhibition_detail' exhibition.slug %}" class="btn-primary inline-flex items-center w-fit">
+                        <span>View Details</span>
                         <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                         </svg>
@@ -73,14 +73,14 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
             {% for exhibition in upcoming_exhibitions %}
             <div class="card overflow-hidden">
-                <div class="aspect-[4/3] max-h-48 sm:max-h-56 overflow-hidden">
+                <div class="aspect-[4/3] overflow-hidden">
                     <img 
                         src="{% get_media_prefix %}{{ exhibition.image }}" 
                         alt="{{ exhibition.title }}"
-                        class="w-full h-full object-cover"
+                        class="w-full h-full object-contain"
                     >
                 </div>
-                <div class="p-6">
+                <div class="p-4 sm:p-5">
                     <span class="badge-featured inline-block mb-3">Coming Soon</span>
                     <h3 class="font-playfair text-xl text-brand-indigo mb-1">{{ exhibition.title }}</h3>
                     <p class="font-inter text-gray-600 mb-3">{{ exhibition.artist_name }}</p>
@@ -108,14 +108,14 @@
         <div class="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
             {% for exhibition in past_exhibitions %}
             <div class="card overflow-hidden opacity-75 hover:opacity-100 transition-opacity">
-                <div class="aspect-[4/3] max-h-40 sm:max-h-48 overflow-hidden">
+                <div class="aspect-[4/3] overflow-hidden">
                     <img 
                         src="{% get_media_prefix %}{{ exhibition.image }}" 
                         alt="{{ exhibition.title }}"
-                        class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all"
+                        class="w-full h-full object-contain grayscale hover:grayscale-0 transition-all"
                     >
                 </div>
-                <div class="p-4">
+                <div class="p-3 sm:p-4">
                     <h3 class="font-playfair text-lg text-brand-indigo mb-1">{{ exhibition.title }}</h3>
                     <p class="font-inter text-sm text-gray-600 mb-2">{{ exhibition.artist_name }}</p>
                     <p class="font-inter text-xs text-gray-500">

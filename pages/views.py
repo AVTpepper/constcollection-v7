@@ -48,3 +48,14 @@ def exhibitions(request):
         'past_exhibitions': past_exhibitions,
     }
     return render(request, 'pages/exhibitions.html', context)
+
+
+def exhibition_detail(request, slug):
+    """Exhibition detail page."""
+    from django.shortcuts import get_object_or_404
+    exhibition = get_object_or_404(Exhibition, slug=slug)
+    
+    context = {
+        'exhibition': exhibition,
+    }
+    return render(request, 'pages/exhibition_detail.html', context)

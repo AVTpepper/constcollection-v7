@@ -3,11 +3,11 @@
 <article class="group cursor-pointer w-full h-full flex flex-col" x-data="{ isHovered: false }" @mouseenter="isHovered = true" @mouseleave="isHovered = false">
     <a href="{% url 'product_detail' product.slug %}" class="flex flex-col flex-1">
         <!-- Image Container -->
-        <div class="relative overflow-hidden rounded-lg bg-gray-100 aspect-square min-h-[30vh] max-h-[50vh] mb-4 flex-shrink-0">
+        <div class="relative overflow-hidden rounded-lg bg-gray-100 aspect-square mb-4 flex-shrink-0 max-w-full">
             <img 
                 src="{% get_media_prefix %}{{ product.image }}" 
                 alt="{{ product.name }}"
-                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                class="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
                 loading="lazy"
             >
             
@@ -43,11 +43,11 @@
 
         <!-- Info -->
         <div class="space-y-1 flex-1 flex flex-col">
-            <h3 class="font-playfair text-lg group-hover:text-brand-indigo transition-colors line-clamp-2">
+            <h3 class="font-playfair text-lg group-hover:text-brand-indigo transition-colors line-clamp-2 break-words">
                 {{ product.name }}
             </h3>
             {% if product.category %}
-            <p class="font-inter text-gray-500 text-xs uppercase tracking-wide">
+            <p class="font-inter text-gray-500 text-xs uppercase tracking-wide truncate">
                 {{ product.category.name }}
             </p>
             {% endif %}
