@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}ConstCollection{% endblock %}</title>
-    <meta name="description" content="{% block meta_description %}Curating exceptional contemporary art for discerning collectors.{% endblock %}">
+    <title>{% block title %}ConstCollection - Art by Cecilia K.{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}Contemporary art by Cecilia K. — large illuminated acrylic paintings exploring feminine power, memory, and storytelling.{% endblock %}">
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,12 +18,13 @@
     <!-- Alpine.js for interactivity -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     
+    {% block extra_head %}{% endblock %}
     {% block extra_css %}{% endblock %}
 </head>
-<body class="font-inter text-gray-900 bg-white min-h-screen flex flex-col">
+<body class="font-inter text-gray-900 bg-white min-h-screen flex flex-col overflow-x-hidden">
     {% include 'components/_navigation.html' %}
     
-    <main class="flex-grow">
+    <main class="flex-grow pt-16">
         {% block content %}{% endblock %}
     </main>
     

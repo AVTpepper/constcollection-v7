@@ -46,8 +46,12 @@ def product_detail(request, slug):
         is_active=True
     ).exclude(id=product.id).select_related('category')[:4]
     
+    # Build image list for gallery (for consistency with artwork detail)
+    images = [product.image]
+    
     context = {
         'product': product,
         'related_products': related_products,
+        'images': images,
     }
     return render(request, 'shop/product_detail.html', context)

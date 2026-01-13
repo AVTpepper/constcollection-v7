@@ -23,7 +23,7 @@
         {% for exhibition in current_exhibitions %}
         <div class="card overflow-hidden">
             <div class="grid grid-cols-1 lg:grid-cols-2">
-                <div class="aspect-[4/3] lg:aspect-auto">
+                <div class="aspect-[4/3] lg:aspect-[3/4] max-h-72 sm:max-h-80 lg:max-h-96 overflow-hidden">
                     <img 
                         src="{% get_media_prefix %}{{ exhibition.image }}" 
                         alt="{{ exhibition.title }}"
@@ -70,10 +70,10 @@
     <section class="mb-16">
         <h2 class="font-playfair text-2xl text-brand-indigo mb-8">Upcoming Exhibitions</h2>
         
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
             {% for exhibition in upcoming_exhibitions %}
             <div class="card overflow-hidden">
-                <div class="aspect-[16/9]">
+                <div class="aspect-[4/3] max-h-48 sm:max-h-56 overflow-hidden">
                     <img 
                         src="{% get_media_prefix %}{{ exhibition.image }}" 
                         alt="{{ exhibition.title }}"
@@ -105,10 +105,10 @@
     <section>
         <h2 class="font-playfair text-2xl text-brand-indigo mb-8">Past Exhibitions</h2>
         
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
             {% for exhibition in past_exhibitions %}
             <div class="card overflow-hidden opacity-75 hover:opacity-100 transition-opacity">
-                <div class="aspect-[4/3]">
+                <div class="aspect-[4/3] max-h-40 sm:max-h-48 overflow-hidden">
                     <img 
                         src="{% get_media_prefix %}{{ exhibition.image }}" 
                         alt="{{ exhibition.title }}"

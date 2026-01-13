@@ -1,13 +1,13 @@
 {% load static humanize %}
 <!-- Artwork Card -->
-<article class="group cursor-pointer" x-data="{ isLiked: false, isHovered: false }" @mouseenter="isHovered = true" @mouseleave="isHovered = false">
+<article class="group cursor-pointer w-full" x-data="{ isHovered: false }" @mouseenter="isHovered = true" @mouseleave="isHovered = false">
     <a href="{% url 'artwork_detail' artwork.slug %}">
         <!-- Image Container -->
-        <div class="relative overflow-hidden rounded-lg bg-gray-100 aspect-[3/4] mb-4">
+        <div class="relative overflow-hidden rounded-lg bg-gray-100 aspect-[3/4] min-h-[40vh] max-h-[70vh] mb-4">
             <img 
                 src="{% get_media_prefix %}{{ artwork.image }}" 
                 alt="{{ artwork.title }} by {{ artwork.artist.name }}"
-                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 loading="lazy"
             >
             
@@ -33,19 +33,6 @@
                 <span class="badge-new">New</span>
                 {% endif %}
             </div>
-
-            <!-- Like Button -->
-            <button
-                @click.prevent.stop="isLiked = !isLiked"
-                class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full p-2 hover:bg-white transition-colors"
-                :aria-label="isLiked ? 'Unlike artwork' : 'Like artwork'"
-            >
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transition-colors" 
-                     :class="isLiked ? 'fill-accent-coral text-accent-coral' : 'text-gray-600'"
-                     viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                </svg>
-            </button>
         </div>
 
         <!-- Info -->
@@ -58,7 +45,7 @@
             </p>
             {% if artwork.medium and artwork.year %}
             <p class="font-inter text-gray-500 text-xs">
-                {{ artwork.get_medium_display }} · {{ artwork.year }}
+                {{ artwork.get_medium_display }}, {{ artwork.year }}
             </p>
             {% endif %}
             <p class="font-inter text-brand-indigo font-semibold mt-2">

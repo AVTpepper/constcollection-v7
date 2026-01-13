@@ -9,6 +9,8 @@ class Artist(models.Model):
     photo = models.CharField(max_length=500, blank=True, help_text="Path to artist photo in media folder")
     website = models.URLField(blank=True)
     instagram = models.CharField(max_length=100, blank=True)
+    facebook = models.URLField(blank=True)
+    linkedin = models.URLField(blank=True)
 
     class Meta:
         ordering = ['name']
@@ -38,6 +40,7 @@ class Artwork(models.Model):
     image = models.CharField(max_length=500, help_text="Path to main image in media folder")
     image_detail_1 = models.CharField(max_length=500, blank=True, help_text="Path to detail image 1")
     image_detail_2 = models.CharField(max_length=500, blank=True, help_text="Path to detail image 2")
+    image_detail_3 = models.CharField(max_length=500, blank=True, help_text="Path to detail image 3")
     medium = models.CharField(max_length=20, choices=MEDIUM_CHOICES)
     dimensions = models.CharField(max_length=100, help_text="e.g., 36 x 48 inches")
     year = models.PositiveIntegerField()

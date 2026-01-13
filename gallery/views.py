@@ -55,6 +55,8 @@ def artwork_detail(request, slug):
         images.append(artwork.image_detail_1)
     if artwork.image_detail_2:
         images.append(artwork.image_detail_2)
+    if artwork.image_detail_3:
+        images.append(artwork.image_detail_3)
     
     context = {
         'artwork': artwork,

@@ -7,5 +7,7 @@ urlpatterns = [
     path('cart/update/', views.cart_update, name='cart_update'),
     path('cart/remove/', views.cart_remove, name='cart_remove'),
     path('checkout/', views.checkout, name='checkout'),
+    path('checkout/process/', views.process_payment, name='process_payment'),
     path('checkout/success/', views.checkout_success, name='checkout_success'),
+    path('webhook/stripe/', views.stripe_webhook, name='stripe_webhook'),
 ]

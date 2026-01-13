@@ -4,123 +4,276 @@
 {% block title %}{{ product.name }} - ConstCollection{% endblock %}
 
 {% block content %}
-<div class="page-container py-12">
+<div class="bg-white">
     <!-- Breadcrumb -->
-    <nav class="mb-8">
-        <ol class="flex items-center space-x-2 font-inter text-sm">
-            <li><a href="{% url 'home' %}" class="text-gray-500 hover:text-brand-indigo">Home</a></li>
-            <li class="text-gray-400">/</li>
-            <li><a href="{% url 'shop' %}" class="text-gray-500 hover:text-brand-indigo">Shop</a></li>
-            <li class="text-gray-400">/</li>
-            <li class="text-brand-indigo">{{ product.name }}</li>
+    <nav class="page-container py-2 lg:py-3">
+        <ol class="flex items-center space-x-2 font-inter text-sm text-gray-500">
+            <li><a href="{% url 'home' %}" class="hover:text-brand-indigo transition-colors">Home</a></li>
+            <li><span class="text-gray-300">/</span></li>
+            <li><a href="{% url 'shop' %}" class="hover:text-brand-indigo transition-colors">Shop</a></li>
+            <li><span class="text-gray-300">/</span></li>
+            <li class="text-gray-900 truncate max-w-[200px]">{{ product.name }}</li>
         </ol>
     </nav>
 
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-        <!-- Product Image -->
-        <div class="aspect-square rounded-lg overflow-hidden bg-gray-100">
-            <img 
-                src="{% get_media_prefix %}{{ product.image }}" 
-                alt="{{ product.name }}"
-                class="w-full h-full object-cover"
-            >
-        </div>
-
-        <!-- Product Details -->
-        <div>
-            <!-- Category -->
-            <p class="font-inter text-sm text-gray-500 uppercase tracking-wide mb-2">
-                {{ product.category.name }}
-            </p>
-
-            <!-- Stock Badge -->
-            <div class="mb-4">
-                {% if not product.in_stock %}
-                <span class="badge-out-of-stock">Out of Stock</span>
-                {% elif product.low_stock %}
-                <span class="badge-low-stock">Only {{ product.stock }} left</span>
+    <!-- Main Product Section -->
+    <div class="page-container pb-8 lg:pb-6" x-data="{ activeImage: 0, showLightbox: false }">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10">
+            
+            <!-- Left Column: Image Gallery -->
+            <div class="space-y-3 lg:space-y-2 flex flex-col">
+                <!-- Main Image -->
+                <div class="relative bg-gray-100 rounded-xl overflow-hidden cursor-zoom-in group shadow-lg min-h-[40vh] max-h-[70vh]" @click="showLightbox = true">
+                    <div class="aspect-[4/5] h-full">
+                        {% for image in images %}
+                        <img 
+                            x-show="activeImage === {{ forloop.counter0 }}"
+                            x-transition:enter="transition ease-out duration-300"
+                            x-transition:enter-start="opacity-0 scale-95"
+                            x-transition:enter-end="opacity-100 scale-100"
+                            src="{% get_media_prefix %}{{ image }}" 
+                            alt="{{ product.name }}"
+                            class="absolute inset-0 w-full h-full object-contain"
+                        >
+                        {% endfor %}
+                    </div>
+                    <!-- Zoom hint -->
+                    <div class="absolute bottom-3 right-3 bg-white/90 backdrop-blur-sm rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity shadow-lg">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                        </svg>
+                    </div>
+                </div>
+                
+                <!-- Thumbnail Grid -->
+                {% if images|length > 1 %}
+                <div class="flex gap-2 flex-shrink-0">
+                    {% for image in images %}
+                    <button 
+                        @click="activeImage = {{ forloop.counter0 }}"
+                        class="relative w-16 h-16 lg:w-20 lg:h-20 rounded-lg overflow-hidden bg-gray-50 transition-all duration-200 group flex-shrink-0"
+                        :class="activeImage === {{ forloop.counter0 }} 
+                            ? 'ring-2 ring-brand-indigo ring-offset-2' 
+                            : 'hover:ring-2 hover:ring-gray-300 hover:ring-offset-2 opacity-70 hover:opacity-100'"
+                    >
+                        <img 
+                            src="{% get_media_prefix %}{{ image }}" 
+                            alt="{{ product.name }} - View {{ forloop.counter }}"
+                            class="w-full h-full object-cover"
+                        >
+                    </button>
+                    {% endfor %}
+                </div>
                 {% endif %}
             </div>
 
-            <h1 class="font-playfair text-3xl md:text-4xl text-brand-indigo mb-4">
-                {{ product.name }}
-            </h1>
-
-            <!-- Price -->
-            <p class="font-inter text-3xl font-bold text-brand-indigo mb-6">
-                ${{ product.price|floatformat:2 }}
-            </p>
-
-            <!-- Description -->
-            {% if product.description %}
-            <div class="mb-8">
-                <h3 class="font-inter font-semibold text-gray-900 mb-2">Description</h3>
-                <p class="font-inter text-gray-700 leading-relaxed">
-                    {{ product.description }}
-                </p>
-            </div>
-            {% endif %}
-
-            <!-- Add to Cart -->
-            {% if product.in_stock %}
-            <form action="{% url 'cart_add' %}" method="post" class="mb-6" x-data="{ quantity: 1 }">
-                {% csrf_token %}
-                <input type="hidden" name="item_type" value="product">
-                <input type="hidden" name="item_id" value="{{ product.id }}">
-                
-                <!-- Quantity Selector -->
-                <div class="flex items-center gap-4 mb-4">
-                    <label class="font-inter text-gray-700">Quantity:</label>
-                    <div class="flex items-center border border-gray-300 rounded-lg">
-                        <button 
-                            type="button"
-                            @click="quantity = Math.max(1, quantity - 1)"
-                            class="px-4 py-2 text-gray-600 hover:text-brand-indigo transition-colors"
-                        >
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
-                            </svg>
-                        </button>
-                        <input 
-                            type="number" 
-                            name="quantity" 
-                            x-model="quantity"
-                            min="1" 
-                            max="{{ product.stock }}"
-                            class="w-16 text-center font-inter border-0 focus:ring-0"
-                        >
-                        <button 
-                            type="button"
-                            @click="quantity = Math.min({{ product.stock }}, quantity + 1)"
-                            class="px-4 py-2 text-gray-600 hover:text-brand-indigo transition-colors"
-                        >
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                            </svg>
-                        </button>
-                    </div>
+            <!-- Right Column: Product Info -->
+            <div class="lg:sticky lg:top-4 lg:self-start space-y-4 lg:space-y-3">
+                <!-- Category Badge -->
+                <div class="flex flex-wrap gap-2">
+                    <span class="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold bg-gray-100 text-gray-700 uppercase tracking-wide">
+                        {{ product.category.name }}
+                    </span>
+                    {% if not product.in_stock %}
+                    <span class="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold bg-red-100 text-red-700">
+                        Out of Stock
+                    </span>
+                    {% elif product.low_stock %}
+                    <span class="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold bg-amber-100 text-amber-700">
+                        Only {{ product.stock }} left
+                    </span>
+                    {% endif %}
                 </div>
 
-                <button type="submit" class="w-full btn-primary py-4 text-lg">
-                    Add to Cart
+                <!-- Title -->
+                <div>
+                    <h1 class="font-playfair text-2xl sm:text-3xl lg:text-4xl text-gray-900 leading-tight">
+                        {{ product.name }}
+                    </h1>
+                </div>
+
+                <!-- Price -->
+                <div class="flex items-baseline gap-3">
+                    <p class="font-inter text-3xl lg:text-4xl font-bold text-gray-900">
+                        ${{ product.price|floatformat:2 }}
+                    </p>
+                </div>
+
+                <!-- Description -->
+                {% if product.description %}
+                <div class="py-3 border-y border-gray-200">
+                    <p class="font-inter text-gray-600 leading-relaxed">
+                        {{ product.description }}
+                    </p>
+                </div>
+                {% endif %}
+
+                <!-- Add to Cart Form -->
+                {% if product.in_stock %}
+                <form action="{% url 'cart_add' %}" method="post" class="space-y-3" x-data="{ quantity: 1 }">
+                    {% csrf_token %}
+                    <input type="hidden" name="item_type" value="product">
+                    <input type="hidden" name="item_id" value="{{ product.id }}">
+                    
+                    <!-- Quantity Selector -->
+                    <div class="flex items-center gap-4">
+                        <span class="font-inter text-sm text-gray-700">Quantity:</span>
+                        <div class="inline-flex items-center border border-gray-300 rounded-lg">
+                            <button 
+                                type="button"
+                                @click="quantity = Math.max(1, quantity - 1)"
+                                class="w-10 h-10 flex items-center justify-center text-gray-600 hover:text-brand-indigo hover:bg-gray-50 transition-colors rounded-l-lg"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
+                                </svg>
+                            </button>
+                            <input 
+                                type="number" 
+                                name="quantity" 
+                                x-model="quantity"
+                                min="1" 
+                                max="{{ product.stock }}"
+                                class="w-14 h-10 text-center font-inter text-sm border-x border-gray-300 focus:outline-none focus:ring-0"
+                            >
+                            <button 
+                                type="button"
+                                @click="quantity = Math.min({{ product.stock }}, quantity + 1)"
+                                class="w-10 h-10 flex items-center justify-center text-gray-600 hover:text-brand-indigo hover:bg-gray-50 transition-colors rounded-r-lg"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Add to Cart Button -->
+                    <button type="submit" class="w-full bg-brand-indigo hover:bg-brand-indigo/90 text-white font-inter font-semibold py-3 px-6 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-brand-indigo/25 hover:shadow-xl hover:shadow-brand-indigo/30 hover:-translate-y-0.5">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                        Add to Cart
+                    </button>
+                </form>
+                {% else %}
+                <button disabled class="w-full bg-gray-200 text-gray-500 font-inter font-semibold py-3 px-6 rounded-xl cursor-not-allowed">
+                    Out of Stock
                 </button>
-            </form>
-            {% else %}
-            <button disabled class="w-full bg-gray-300 text-gray-500 font-inter font-medium py-4 px-6 rounded-lg cursor-not-allowed text-lg mb-6">
-                Out of Stock
+                {% endif %}
+
+                <!-- Trust Badges -->
+                <div class="bg-gray-50 rounded-xl p-4">
+                    <div class="flex flex-wrap gap-x-6 gap-y-3 justify-between">
+                        <div class="flex items-center gap-2">
+                            <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </div>
+                            <p class="font-inter text-xs font-medium text-gray-900 whitespace-nowrap">Quality Guarantee</p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                                </svg>
+                            </div>
+                            <p class="font-inter text-xs font-medium text-gray-900 whitespace-nowrap">Secure Checkout</p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center flex-shrink-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
+                                </svg>
+                            </div>
+                            <p class="font-inter text-xs font-medium text-gray-900 whitespace-nowrap">Fast Shipping</p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center flex-shrink-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                                </svg>
+                            </div>
+                            <p class="font-inter text-xs font-medium text-gray-900 whitespace-nowrap">Easy Returns</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lightbox Modal -->
+        <div 
+            x-show="showLightbox" 
+            x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100"
+            x-transition:leave="transition ease-in duration-200"
+            x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0"
+            class="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4"
+            @click.self="showLightbox = false"
+            @keydown.escape.window="showLightbox = false"
+        >
+            <button @click="showLightbox = false" class="absolute top-4 right-4 text-white/70 hover:text-white transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
             </button>
+            
+            <!-- Navigation arrows -->
+            {% if images|length > 1 %}
+            <button 
+                @click="activeImage = activeImage === 0 ? {{ images|length }} - 1 : activeImage - 1"
+                class="absolute left-4 text-white/70 hover:text-white transition-colors p-2"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+            </button>
+            <button 
+                @click="activeImage = activeImage === {{ images|length }} - 1 ? 0 : activeImage + 1"
+                class="absolute right-4 text-white/70 hover:text-white transition-colors p-2"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+            </button>
+            {% endif %}
+            
+            <div class="max-w-5xl max-h-[75vh]">
+                {% for image in images %}
+                <img 
+                    x-show="activeImage === {{ forloop.counter0 }}"
+                    x-transition:enter="transition ease-out duration-300"
+                    x-transition:enter-start="opacity-0 scale-95"
+                    x-transition:enter-end="opacity-100 scale-100"
+                    src="{% get_media_prefix %}{{ image }}" 
+                    alt="{{ product.name }}"
+                    class="max-w-full max-h-[75vh] object-contain"
+                >
+                {% endfor %}
+            </div>
+            
+            <!-- Image counter -->
+            {% if images|length > 1 %}
+            <div class="absolute bottom-4 left-1/2 -translate-x-1/2 text-white/70 font-inter text-sm">
+                <span x-text="activeImage + 1"></span> / {{ images|length }}
+            </div>
             {% endif %}
         </div>
     </div>
 
     <!-- Related Products -->
     {% if related_products %}
-    <section class="mt-16 pt-16 border-t border-gray-200">
-        <h2 class="section-title mb-8">Related Products</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {% for product in related_products %}
-                {% include 'components/_product_card.html' with product=product %}
-            {% endfor %}
+    <section class="bg-gray-50 fluid-py-section">
+        <div class="page-container">
+            <h2 class="font-playfair text-3xl text-gray-900 mb-8">Related Products</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 fluid-gap">
+                {% for product in related_products %}
+                    {% include 'components/_product_card.html' with product=product %}
+                {% endfor %}
+            </div>
         </div>
     </section>
     {% endif %}

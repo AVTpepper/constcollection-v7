@@ -4,18 +4,18 @@
 {% block title %}Shopping Cart - ConstCollection{% endblock %}
 
 {% block content %}
-<div class="page-container py-12">
-    <h1 class="section-title mb-8">Shopping Cart</h1>
+<div class="page-container py-8 sm:py-12">
+    <h1 class="section-title mb-6 sm:mb-8">Shopping Cart</h1>
 
     {% if cart.item_count > 0 %}
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
         <!-- Cart Items -->
         <div class="lg:col-span-2">
-            <div class="space-y-4">
+            <div class="space-y-3 sm:space-y-4">
                 {% for item in cart %}
-                <div class="card p-4 flex gap-4" x-data="{ quantity: {{ item.quantity }} }">
+                <div class="card p-3 sm:p-4 flex gap-3 sm:gap-4" x-data="{ quantity: {{ item.quantity }} }">
                     <!-- Item Image -->
-                    <div class="w-24 h-24 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0">
+                    <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0">
                         <img 
                             src="{% get_media_prefix %}{{ item.image }}" 
                             alt="{{ item.name }}"
@@ -24,16 +24,16 @@
                     </div>
 
                     <!-- Item Details -->
-                    <div class="flex-grow">
-                        <h3 class="font-inter font-medium text-gray-900 mb-1">
+                    <div class="flex-grow min-w-0">
+                        <h3 class="font-inter font-medium text-sm sm:text-base text-gray-900 mb-1 truncate">
                             {{ item.name }}
                         </h3>
-                        <p class="font-inter text-brand-indigo font-semibold mb-2">
+                        <p class="font-inter text-brand-indigo font-semibold text-sm sm:text-base mb-2">
                             ${{ item.price|floatformat:2 }}
                         </p>
 
                         <!-- Quantity Controls -->
-                        <div class="flex items-center gap-4">
+                        <div class="flex items-center gap-2 sm:gap-4 flex-wrap">
                             <form action="{% url 'cart_update' %}" method="post" class="flex items-center">
                                 {% csrf_token %}
                                 <input type="hidden" name="item_type" value="{{ item.type }}">
@@ -44,20 +44,20 @@
                                         type="submit"
                                         name="quantity"
                                         value="{{ item.quantity|add:'-1' }}"
-                                        class="px-3 py-1 text-gray-600 hover:text-brand-indigo transition-colors"
+                                        class="px-2 sm:px-3 py-1 text-gray-600 hover:text-brand-indigo transition-colors"
                                     >
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 sm:h-4 sm:w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
                                         </svg>
                                     </button>
-                                    <span class="w-12 text-center font-inter">{{ item.quantity }}</span>
+                                    <span class="w-8 sm:w-12 text-center font-inter text-sm sm:text-base">{{ item.quantity }}</span>
                                     <button 
                                         type="submit"
                                         name="quantity"
                                         value="{{ item.quantity|add:'1' }}"
-                                        class="px-3 py-1 text-gray-600 hover:text-brand-indigo transition-colors"
+                                        class="px-2 sm:px-3 py-1 text-gray-600 hover:text-brand-indigo transition-colors"
                                     >
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 sm:h-4 sm:w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                                         </svg>
                                     </button>
@@ -70,7 +70,7 @@
                                 <input type="hidden" name="item_type" value="{{ item.type }}">
                                 <input type="hidden" name="item_id" value="{{ item.id }}">
                                 <button type="submit" class="text-gray-400 hover:text-accent-coral transition-colors">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                     </svg>
                                 </button>

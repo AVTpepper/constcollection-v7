@@ -3,12 +3,14 @@
     "model": "gallery.artist",
     "pk": 1,
     "fields": {
-      "name": "Constance Pappalardo",
-      "slug": "constance-pappalardo",
-      "bio": "Constance Pappalardo is a contemporary artist known for her evocative figurative paintings that explore themes of identity, femininity, and the human condition. Her work combines classical techniques with modern sensibilities, creating pieces that are both timeless and deeply personal.",
+      "name": "Cecilia Kristoffersson",
+      "slug": "cecilia-kristoffersson",
+      "bio": "Cecilia was born in 1971 in Bulawayo, Zimbabwe, and moved to Southern Sweden in 1986. Her father was an ethnomusicologist, so much of Cecilia's childhood was spent in the bush listening and dancing to the sounds of traditional marimbas, mbiras and drums. She studied to become a Visual Art Educator and had a 20-year career as an International Baccalaureate Workshop Leader and Visual Art Teacher, while continuing her artistic practice and working as a professional dancer. Through her paintings, Cecilia aims to foster a dialogue of a new female revolution that anchors itself in our understanding of our spiritual DNA and experiences — experiences that bond grandmothers, mothers and daughters in the pathway of life.",
       "photo": "artists/about-me-1.jpg",
       "website": "",
-      "instagram": "@constancepappalardo"
+      "instagram": "@constcollectionartbyceciliak",
+      "facebook": "https://www.facebook.com/profile.php?id=61559467855096",
+      "linkedin": "https://www.linkedin.com/in/cecilia-kristoffersson-a27a28137/"
     }
   }
 ]

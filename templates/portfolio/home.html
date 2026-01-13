@@ -1,0 +1,78 @@
+{% extends 'portfolio/base_portfolio.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<!-- Category Menu - Helen Beard Style -->
+<div class="px-8 py-10 lg:px-16 lg:py-12">
+    <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
+        
+        <!-- Work Categories -->
+        {% for medium in mediums %}
+        <a 
+            href="{% url 'portfolio:work_category' medium.code %}"
+            class="group block"
+        >
+            <div class="aspect-[4/5] overflow-hidden bg-neutral-100 mb-4 relative">
+                {% if medium.cover_image %}
+                <img 
+                    src="/media/{{ medium.cover_image.image }}" 
+                    alt="{{ medium.label }}"
+                    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                >
+                {% else %}
+                <div class="w-full h-full flex items-center justify-center text-neutral-300">
+                    <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                    </svg>
+                </div>
+                {% endif %}
+            </div>
+            <div class="text-center">
+                <h3 class="text-sm font-normal group-hover:text-neutral-500 transition-colors">{{ medium.label }}</h3>
+            </div>
+        </a>
+        {% endfor %}
+        
+        <!-- Exhibitions Link -->
+        <a 
+            href="{% url 'portfolio:exhibitions' %}"
+            class="group block"
+        >
+            <div class="aspect-[4/5] overflow-hidden bg-neutral-800 mb-4 relative flex items-center justify-center">
+                <span class="text-white text-2xl font-serif">Exhibitions</span>
+            </div>
+            <div class="text-center">
+                <h3 class="text-sm font-normal group-hover:text-neutral-500 transition-colors">View All Exhibitions</h3>
+            </div>
+        </a>
+        
+        <!-- About Link -->
+        <a 
+            href="{% url 'portfolio:about' %}"
+            class="group block"
+        >
+            <div class="aspect-[4/5] overflow-hidden bg-neutral-100 mb-4 relative flex items-center justify-center">
+                <span class="text-neutral-800 text-2xl font-serif">About</span>
+            </div>
+            <div class="text-center">
+                <h3 class="text-sm font-normal group-hover:text-neutral-500 transition-colors">Learn More</h3>
+            </div>
+        </a>
+        
+        <!-- Shop Link -->
+        <a 
+            href="{% url 'shop' %}"
+            class="group block"
+        >
+            <div class="aspect-[4/5] overflow-hidden bg-accent-coral mb-4 relative flex items-center justify-center">
+                <span class="text-white text-2xl font-serif">Shop</span>
+            </div>
+            <div class="text-center">
+                <h3 class="text-sm font-normal group-hover:text-neutral-500 transition-colors">Browse Products</h3>
+            </div>
+        </a>
+        
+    </div>
+</div>
+{% endblock %}
