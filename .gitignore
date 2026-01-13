@@ -13,9 +13,6 @@ ENV/
 local_settings.py
 db.sqlite3
 
-# Static files (compiled)
-static/css/output.css
-
 # IDE
 .vscode/
 .idea/
